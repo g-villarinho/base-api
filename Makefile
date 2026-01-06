@@ -28,3 +28,12 @@ mocks: ## Gera mock de services, repositories e commons
 
 sqlc: ## Gera código SQLC a partir das queries SQL
 	@sqlc generate
+
+migrate: ## Aplica todas as migrations pendentes
+	@go run cmd/migrate/main.go --direction=up
+
+migrate-down: ## Reverte a última migration aplicada
+	@go run cmd/migrate/main.go --direction=down
+
+migrate-status: ## Mostra status das migrations
+	@go run cmd/migrate/main.go --direction=status

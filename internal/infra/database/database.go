@@ -6,7 +6,6 @@ import (
 
 	"github.com/gbvillarinho/base-project/config"
 	_ "github.com/mattn/go-sqlite3"
-	migrate "github.com/rubenv/sql-migrate"
 )
 
 func NewConnection(config *config.Config) (*sql.DB, error) {
@@ -23,26 +22,5 @@ func NewConnection(config *config.Config) (*sql.DB, error) {
 		return nil, fmt.Errorf("ping database: %w", err)
 	}
 
-	if err := runMigrations(db); err != nil {
-		return nil, fmt.Errorf("run migrations: %w", err)
-	}
-
 	return db, nil
-}
-
-func runMigrations(db *sql.DB) error {
-	migrations := &migrate.FileMigrationSource{
-		Dir: "internal/infra/database/migrations",
-	}
-
-	n, err := migrate.Exec(db, "sqlite3", migrations, migrate.Up)
-	if err != nil {
-		return fmt.Errorf("apply migrations: %w", err)
-	}
-
-	if n > 0 {
-		fmt.Printf("Applied %d migrations\n", n)
-	}
-
-	return nil
 }
