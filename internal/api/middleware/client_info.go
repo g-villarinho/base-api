@@ -1,0 +1,22 @@
+package middleware
+
+import (
+	"github.com/g-villarinho/voxel-api/internal/api/echoctx"
+	"github.com/g-villarinho/voxel-api/internal/api/model"
+	"github.com/labstack/echo/v4"
+)
+
+func ClientInfo() echo.MiddlewareFunc {
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			req := c.Request()
+			clientInfo := model.ClientInfo{
+				IPAddress:  c.RealIP(),
+				DeviceName: req.Header.Get("Device-Name"),
+				UserAgent:  req.UserAgent(),
+			}
+			echoctx.SetClientInfo(c, clientInfo)
+			return next(c)
+		}
+	}
+}

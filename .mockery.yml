@@ -1,0 +1,29 @@
+all: false
+dir: internal/mocks
+filename: "{{ .InterfaceName | snakecase }}_mock.go"
+force-file-write: true
+formatter: goimports
+include-auto-generated: false
+log-level: info
+structname: "{{ .InterfaceName }}Mock"
+pkgname: mocks
+recursive: false
+require-template-schema-exists: false
+template: testify
+packages:
+  github.com/g-villarinho/voxel-api/internal/service:
+    config:
+      all: true
+      recursive: true
+  github.com/g-villarinho/voxel-api/internal/infra/notification:
+    config:
+      all: true
+      recursive: true
+  github.com/g-villarinho/voxel-api/internal/infra/client:
+    config:
+      all: true
+      recursive: true
+  github.com/g-villarinho/voxel-api/internal/infra/database/sqlc:
+    config:
+      all: true
+      recursive: true

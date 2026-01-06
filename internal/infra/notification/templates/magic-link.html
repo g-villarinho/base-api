@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login Link</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 40px;
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                color: #333;
+            }
+
+            .card {
+                max-width: 500px;
+                margin: 0 auto;
+                border: 2px solid #ddd;
+                border-radius: 8px;
+                padding: 30px;
+                background-color: #ffffff;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .greeting {
+                font-size: 20px;
+                margin-bottom: 20px;
+                color: #333;
+                font-weight: bold;
+            }
+
+            .message {
+                margin: 20px 0;
+                line-height: 1.6;
+                color: #666;
+            }
+
+            .button-container {
+                text-align: center;
+                margin: 30px 0;
+            }
+
+            .login-button {
+                background-color: #333;
+                color: white;
+                padding: 12px 30px;
+                text-decoration: none;
+                border-radius: 5px;
+                font-size: 16px;
+                font-weight: bold;
+                display: inline-block;
+            }
+
+            .login-button:hover {
+                background-color: #555;
+            }
+
+            .link-text {
+                word-break: break-all;
+                color: #666;
+                margin: 10px 0;
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <div class="greeting">Hello, {{.UserName}}!</div>
+
+            <div class="message">
+                You requested a login link to access your account.
+                Click the button below to sign in securely.
+            </div>
+
+            <div class="button-container">
+                <a href="{{.LoginLink}}" class="login-button">
+                    Sign In
+                </a>
+            </div>
+
+            <div class="message">
+                <strong>Security Information:</strong><br />
+                - This link expires in 10 minutes<br />
+                - If you didn't request this link, please ignore this email<br />
+                - Never share this link with anyone
+            </div>
+
+            <div class="message">
+                <strong>Having trouble?</strong><br />
+                Copy and paste this link into your browser:
+            </div>
+
+            <div class="link-text">{{.LoginLink}}</div>
+
+            <div
+                class="message"
+                style="
+                    margin-top: 30px;
+                    padding-top: 20px;
+                    border-top: 1px solid #eee;
+                    font-size: 12px;
+                    color: #888;
+                "
+            >
+                <strong>Our Company</strong><br />
+                This is an automated message. Please do not reply.<br /><br />
+                &copy; {{.CurrentYear}} Our Company. All rights reserved.<br />
+                This email was sent to {{.UserEmail}}.
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,24 @@
+version: "2"
+sql:
+  - schema: "internal/infra/database/migrations"
+    queries: "internal/infra/database/queries"
+    engine: "sqlite"
+    gen:
+      go:
+        package: "sqlc"
+        out: "internal/infra/database/sqlc"
+        emit_json_tags: true
+        emit_prepared_queries: false
+        emit_interface: true
+        emit_exact_table_names: false
+        emit_empty_slices: true
+        emit_pointers_for_null_types: true
+        overrides:
+          - db_type: "uuid"
+            go_type: "github.com/google/uuid.UUID"
+          - db_type: "timestamptz"
+            go_type: "time.Time"
+          - db_type: "timestamp"
+            go_type: "time.Time"
+          - db_type: "datetime"
+            go_type: "time.Time"
