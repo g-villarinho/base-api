@@ -59,7 +59,7 @@ func NewAPI(params NewAPIParams) *API {
 		registerSwaggerRoutes(e, params.SwaggerHandler)
 	}
 
-	registerAuthRoutes(e, params.IdentityHandler, params.LoginHandler, params.SecurityHandler, params.AuthMiddleware, params.SessionHandler, params.Config)
+	registerAuthRoutes(e, params.IdentityHandler, params.LoginHandler, params.SecurityHandler, params.SessionHandler, params.AuthMiddleware, params.Config)
 	registerUserRoutes(e, params.UserHandler, params.AuthMiddleware)
 	registerSessionRoutes(e, params.SessionHandler, params.AuthMiddleware)
 
