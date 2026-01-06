@@ -1,8 +1,8 @@
-# Configuration files with sensitive data
-config.yaml
-config.test.yaml
-config.*.yaml
-!config.yaml.example
+# Environment files with sensitive data
+.env
+.env.local
+.env.*.local
+!.env.example
 
 *.pem
 

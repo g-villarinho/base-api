@@ -15,18 +15,15 @@ const (
 )
 
 type Config struct {
-	Env         string    `mapstructure:"env"`
-	Server      Server    `mapstructure:"server"`
-	Security    Security  `mapstructure:"security"`
-	RateLimit   RateLimit `mapstructure:"ratelimit"`
-	Cors        Cors      `mapstructure:"cors"`
-	URL         URL       `mapstructure:"url"`
-	SqlLite     SqlLite   `mapstructure:"sqlite"`
-	Resend      Resend    `mapstructure:"resend"`
-	Key         Key       `mapstructure:"key"`
-	Session     Session   `mapstructure:"session"`
-	Auth        Auth      `mapstructure:"auth"`
-	ShowSQLLogs bool      `mapstructure:"showsqllogs"`
+	Env       string    `mapstructure:"env"`
+	Server    Server    `mapstructure:"server"`
+	RateLimit RateLimit `mapstructure:"ratelimit"`
+	Cors      Cors      `mapstructure:"cors"`
+	URL       URL       `mapstructure:"url"`
+	SqlLite   SqlLite   `mapstructure:"sqlite"`
+	Resend    Resend    `mapstructure:"resend"`
+	Session   Session   `mapstructure:"session"`
+	Auth      Auth      `mapstructure:"auth"`
 }
 
 type Auth struct {
@@ -45,12 +42,6 @@ type SqlLite struct {
 	MaxLifeTime  time.Duration `mapstructure:"maxlifetime"`
 }
 
-type Security struct {
-	AccessTokenExpirationHours time.Duration `mapstructure:"accesstokenexpirationhours"`
-	Issuer                     string        `mapstructure:"issuer"`
-	Audience                   string        `mapstructure:"audience"`
-}
-
 type RateLimit struct {
 	MaxRequests int           `mapstructure:"maxrequests"`
 	Window      time.Duration `mapstructure:"window"`
@@ -60,11 +51,6 @@ type Cors struct {
 	AllowedOrigins []string `mapstructure:"allowedorigins"`
 	AllowedMethods []string `mapstructure:"allowedmethods"`
 	AllowedHeaders []string `mapstructure:"allowedheaders"`
-}
-
-type Key struct {
-	PrivateKey string `mapstructure:"privatekey"`
-	PublicKey  string `mapstructure:"publickey"`
 }
 
 type URL struct {
