@@ -5,10 +5,10 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/g-villarinho/voxel-api/internal/api/echoctx"
-	"github.com/g-villarinho/voxel-api/internal/api/model"
-	"github.com/g-villarinho/voxel-api/internal/domain"
-	"github.com/g-villarinho/voxel-api/internal/service"
+	"github.com/gbvillarinho/base-project/internal/api/echoctx"
+	"github.com/gbvillarinho/base-project/internal/api/model"
+	"github.com/gbvillarinho/base-project/internal/domain"
+	"github.com/gbvillarinho/base-project/internal/service"
 	"github.com/labstack/echo/v4"
 )
 
@@ -139,7 +139,7 @@ func (h *LoginHandler) VerifyMagicLink(c echo.Context) error {
 			log.Warn("blocked user attempted to login", "user_id", echoctx.GetUserID(c))
 			return Forbidden(c, "USER_BLOCKED", "your account has been blocked. Please contact support.")
 		}
-		
+
 		log.Error("error to verify magic link", "error", err)
 		return InternalServerError(c)
 	}

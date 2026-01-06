@@ -4,8 +4,8 @@ import (
 	"context"
 	"log/slog"
 
-	"github.com/g-villarinho/voxel-api/internal/domain"
-	"github.com/g-villarinho/voxel-api/internal/infra/notification"
+	"github.com/gbvillarinho/base-project/internal/domain"
+	"github.com/gbvillarinho/base-project/internal/infra/notification"
 )
 
 type EmailService interface {

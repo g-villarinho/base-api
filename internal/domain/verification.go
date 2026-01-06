@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/g-villarinho/voxel-api/pkg/crypto"
+	"github.com/gbvillarinho/base-project/pkg/crypto"
 	"github.com/google/uuid"
 )
 

@@ -10,8 +10,8 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/g-villarinho/voxel-api/internal/infra/notification"
-	"github.com/g-villarinho/voxel-api/internal/mocks"
+	"github.com/gbvillarinho/base-project/internal/infra/notification"
+	"github.com/gbvillarinho/base-project/internal/mocks"
 )
 
 func setupEmailNotification(t *testing.T) (notification.EmailNotification, *mocks.EmailClientMock) {

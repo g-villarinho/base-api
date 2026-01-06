@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/g-villarinho/voxel-api/internal/domain"
-	"github.com/g-villarinho/voxel-api/internal/infra/database/sqlc"
-	"github.com/g-villarinho/voxel-api/internal/mocks"
+	"github.com/gbvillarinho/base-project/internal/domain"
+	"github.com/gbvillarinho/base-project/internal/infra/database/sqlc"
+	"github.com/gbvillarinho/base-project/internal/mocks"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

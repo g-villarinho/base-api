@@ -7,7 +7,7 @@ package mocks
 import (
 	"context"
 
-	"github.com/g-villarinho/voxel-api/internal/infra/database/sqlc"
+	"github.com/gbvillarinho/base-project/internal/infra/database/sqlc"
 	"github.com/google/uuid"
 	mock "github.com/stretchr/testify/mock"
 )

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/g-villarinho/voxel-api/config"
-	"github.com/g-villarinho/voxel-api/internal/infra/notification"
+	"github.com/gbvillarinho/base-project/config"
+	"github.com/gbvillarinho/base-project/internal/infra/notification"
 	"github.com/resend/resend-go/v2"
 )
 

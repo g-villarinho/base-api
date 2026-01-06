@@ -5,9 +5,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/g-villarinho/voxel-api/config"
-	"github.com/g-villarinho/voxel-api/internal/domain"
-	"github.com/g-villarinho/voxel-api/internal/mocks"
+	"github.com/gbvillarinho/base-project/config"
+	"github.com/gbvillarinho/base-project/internal/domain"
+	"github.com/gbvillarinho/base-project/internal/mocks"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/g-villarinho/voxel-api/internal/api/model"
+	"github.com/gbvillarinho/base-project/internal/api/model"
 	"github.com/labstack/echo/v4"
 )
 

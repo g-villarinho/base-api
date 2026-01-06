@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/g-villarinho/voxel-api/config"
+	"github.com/gbvillarinho/base-project/config"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )

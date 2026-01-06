@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/g-villarinho/voxel-api/config"
-	"github.com/g-villarinho/voxel-api/internal/domain"
+	"github.com/gbvillarinho/base-project/config"
+	"github.com/gbvillarinho/base-project/internal/domain"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

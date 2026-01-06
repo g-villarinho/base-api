@@ -1,5 +1,4 @@
-module github.com/g-villarinho/voxel-api
-
+module github.com/gbvillarinho/base-project
 go 1.25.1
 
 require (

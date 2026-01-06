@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/g-villarinho/voxel-api/pkg/validation"
+	"github.com/gbvillarinho/base-project/pkg/validation"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 )

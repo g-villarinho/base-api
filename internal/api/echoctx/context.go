@@ -1,7 +1,7 @@
 package echoctx
 
 import (
-	"github.com/g-villarinho/voxel-api/internal/api/model"
+	"github.com/gbvillarinho/base-project/internal/api/model"
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )

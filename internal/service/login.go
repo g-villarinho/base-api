@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/g-villarinho/voxel-api/config"
-	"github.com/g-villarinho/voxel-api/internal/domain"
-	"github.com/g-villarinho/voxel-api/internal/infra/database/sqlc"
-	"github.com/g-villarinho/voxel-api/pkg/hash"
+	"github.com/gbvillarinho/base-project/config"
+	"github.com/gbvillarinho/base-project/internal/domain"
+	"github.com/gbvillarinho/base-project/internal/infra/database/sqlc"
+	"github.com/gbvillarinho/base-project/pkg/hash"
 )
 
 type LoginService interface {

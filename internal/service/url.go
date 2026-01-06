@@ -5,8 +5,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/g-villarinho/voxel-api/config"
-	"github.com/g-villarinho/voxel-api/internal/domain"
+	"github.com/gbvillarinho/base-project/config"
+	"github.com/gbvillarinho/base-project/internal/domain"
 )
 
 type URLService interface {

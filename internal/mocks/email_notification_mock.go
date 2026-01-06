@@ -7,7 +7,7 @@ package mocks
 import (
 	"context"
 
-	"github.com/g-villarinho/voxel-api/internal/infra/notification"
+	"github.com/gbvillarinho/base-project/internal/infra/notification"
 	mock "github.com/stretchr/testify/mock"
 )
 

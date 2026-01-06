@@ -7,7 +7,7 @@ package mocks
 import (
 	"context"
 
-	"github.com/g-villarinho/voxel-api/internal/domain"
+	"github.com/gbvillarinho/base-project/internal/domain"
 	mock "github.com/stretchr/testify/mock"
 )
 

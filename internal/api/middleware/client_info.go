@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"github.com/g-villarinho/voxel-api/internal/api/echoctx"
-	"github.com/g-villarinho/voxel-api/internal/api/model"
+	"github.com/gbvillarinho/base-project/internal/api/echoctx"
+	"github.com/gbvillarinho/base-project/internal/api/model"
 	"github.com/labstack/echo/v4"
 )
 

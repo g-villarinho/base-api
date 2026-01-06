@@ -1,16 +1,16 @@
 package api
 
 import (
-	"github.com/g-villarinho/voxel-api/config"
-	"github.com/g-villarinho/voxel-api/internal/api/handler"
-	"github.com/g-villarinho/voxel-api/internal/api/middleware"
-	"github.com/g-villarinho/voxel-api/internal/infra/client"
-	"github.com/g-villarinho/voxel-api/internal/infra/database"
-	"github.com/g-villarinho/voxel-api/internal/infra/database/sqlc"
-	"github.com/g-villarinho/voxel-api/internal/infra/notification"
-	"github.com/g-villarinho/voxel-api/internal/service"
-	"github.com/g-villarinho/voxel-api/logger"
-	"github.com/g-villarinho/voxel-api/pkg/injector"
+	"github.com/gbvillarinho/base-project/config"
+	"github.com/gbvillarinho/base-project/internal/api/handler"
+	"github.com/gbvillarinho/base-project/internal/api/middleware"
+	"github.com/gbvillarinho/base-project/internal/infra/client"
+	"github.com/gbvillarinho/base-project/internal/infra/database"
+	"github.com/gbvillarinho/base-project/internal/infra/database/sqlc"
+	"github.com/gbvillarinho/base-project/internal/infra/notification"
+	"github.com/gbvillarinho/base-project/internal/service"
+	"github.com/gbvillarinho/base-project/logger"
+	"github.com/gbvillarinho/base-project/pkg/injector"
 	"go.uber.org/dig"
 )
 

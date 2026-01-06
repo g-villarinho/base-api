@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/g-villarinho/voxel-api/config"
+	"github.com/gbvillarinho/base-project/config"
 )
 
 func NewLogger(config *config.Config) *slog.Logger {

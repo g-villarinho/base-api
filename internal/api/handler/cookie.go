@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/g-villarinho/voxel-api/config"
-	"github.com/g-villarinho/voxel-api/internal/service"
+	"github.com/gbvillarinho/base-project/config"
+	"github.com/gbvillarinho/base-project/internal/service"
 	"github.com/labstack/echo/v4"
 )
 

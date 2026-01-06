@@ -3,9 +3,9 @@ package api
 import (
 	"net/http"
 
-	"github.com/g-villarinho/voxel-api/config"
-	"github.com/g-villarinho/voxel-api/internal/api/handler"
-	"github.com/g-villarinho/voxel-api/internal/api/middleware"
+	"github.com/gbvillarinho/base-project/config"
+	"github.com/gbvillarinho/base-project/internal/api/handler"
+	"github.com/gbvillarinho/base-project/internal/api/middleware"
 	"github.com/labstack/echo/v4"
 )
 

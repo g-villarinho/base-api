@@ -34,8 +34,8 @@
 package main
 
 import (
-	"github.com/g-villarinho/voxel-api/internal/api"
-	"github.com/g-villarinho/voxel-api/pkg/injector"
+	"github.com/gbvillarinho/base-project/internal/api"
+	"github.com/gbvillarinho/base-project/pkg/injector"
 )
 
 func main() {

@@ -6,8 +6,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/g-villarinho/voxel-api/internal/domain"
-	"github.com/g-villarinho/voxel-api/internal/infra/database/sqlc"
+	"github.com/gbvillarinho/base-project/internal/domain"
+	"github.com/gbvillarinho/base-project/internal/infra/database/sqlc"
 	"github.com/google/uuid"
 )
 

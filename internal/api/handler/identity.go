@@ -5,10 +5,10 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/g-villarinho/voxel-api/internal/api/echoctx"
-	"github.com/g-villarinho/voxel-api/internal/api/model"
-	"github.com/g-villarinho/voxel-api/internal/domain"
-	"github.com/g-villarinho/voxel-api/internal/service"
+	"github.com/gbvillarinho/base-project/internal/api/echoctx"
+	"github.com/gbvillarinho/base-project/internal/api/model"
+	"github.com/gbvillarinho/base-project/internal/domain"
+	"github.com/gbvillarinho/base-project/internal/service"
 	"github.com/labstack/echo/v4"
 )
 

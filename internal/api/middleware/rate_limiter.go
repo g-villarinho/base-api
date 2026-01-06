@@ -3,7 +3,7 @@ package middleware
 import (
 	"time"
 
-	"github.com/g-villarinho/voxel-api/config"
+	"github.com/gbvillarinho/base-project/config"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"golang.org/x/time/rate"

@@ -3,9 +3,9 @@ package middleware
 import (
 	"log/slog"
 
-	"github.com/g-villarinho/voxel-api/internal/api/echoctx"
-	"github.com/g-villarinho/voxel-api/internal/api/handler"
-	"github.com/g-villarinho/voxel-api/internal/service"
+	"github.com/gbvillarinho/base-project/internal/api/echoctx"
+	"github.com/gbvillarinho/base-project/internal/api/handler"
+	"github.com/gbvillarinho/base-project/internal/service"
 	"github.com/labstack/echo/v4"
 )
 
