@@ -87,10 +87,12 @@ func (s *IdentityServiceImpl) RegisterMagicLink(ctx context.Context, name, email
 		return fmt.Errorf("create user: %w", err)
 	}
 
-	verification, err := s.verificationService.CreateVerification(ctx, domain.CreateVerificationParams{
+	params := domain.CreateVerificationParams{
 		UserID: user.ID,
 		Flow:   domain.MagicLinkLoginFlow,
-	})
+	}
+
+	verification, err := s.verificationService.CreateVerification(ctx, params)
 	if err != nil {
 		return fmt.Errorf("create verification: %w", err)
 	}

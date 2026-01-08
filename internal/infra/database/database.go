@@ -1,26 +1,31 @@
 package database
 
 import (
-	"database/sql"
+	"context"
 	"fmt"
 
 	"github.com/gbvillarinho/base-project/config"
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func NewConnection(config *config.Config) (*sql.DB, error) {
-	db, err := sql.Open("sqlite3", config.SqlLite.DatabaseName)
+func NewConnection(cfg *config.Config) (*pgxpool.Pool, error) {
+	poolConfig, err := pgxpool.ParseConfig(cfg.Database.DSN)
 	if err != nil {
-		return nil, fmt.Errorf("open database: %w", err)
+		return nil, fmt.Errorf("parse database config: %w", err)
 	}
 
-	db.SetMaxIdleConns(config.SqlLite.MaxIdle)
-	db.SetMaxOpenConns(config.SqlLite.MaxConn)
-	db.SetConnMaxLifetime(config.SqlLite.MaxLifeTime)
+	poolConfig.MaxConns = cfg.Database.MaxConn
+	poolConfig.MinConns = cfg.Database.MaxIdle
+	poolConfig.MaxConnLifetime = cfg.Database.MaxLifeTime
 
-	if err := db.Ping(); err != nil {
+	pool, err := pgxpool.NewWithConfig(context.Background(), poolConfig)
+	if err != nil {
+		return nil, fmt.Errorf("create connection pool: %w", err)
+	}
+
+	if err := pool.Ping(context.Background()); err != nil {
 		return nil, fmt.Errorf("ping database: %w", err)
 	}
 
-	return db, nil
+	return pool, nil
 }

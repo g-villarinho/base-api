@@ -33,7 +33,7 @@ func (r *MigrationRunner) Up() error {
 		return fmt.Errorf("find migrations: %w", err)
 	}
 
-	records, err := migrate.GetMigrationRecords(r.db, "sqlite3")
+	records, err := migrate.GetMigrationRecords(r.db, "postgres")
 	if err != nil {
 		return fmt.Errorf("get migration records: %w", err)
 	}
@@ -58,7 +58,7 @@ func (r *MigrationRunner) Up() error {
 	}
 
 	start := time.Now()
-	n, err := migrate.Exec(r.db, "sqlite3", r.source, migrate.Up)
+	n, err := migrate.Exec(r.db, "postgres", r.source, migrate.Up)
 	duration := time.Since(start)
 
 	if err != nil {
@@ -85,7 +85,7 @@ func (r *MigrationRunner) Up() error {
 func (r *MigrationRunner) Down() error {
 	r.printHeader()
 
-	records, err := migrate.GetMigrationRecords(r.db, "sqlite3")
+	records, err := migrate.GetMigrationRecords(r.db, "postgres")
 	if err != nil {
 		return fmt.Errorf("get migration records: %w", err)
 	}
@@ -112,7 +112,7 @@ func (r *MigrationRunner) Down() error {
 	}
 
 	start := time.Now()
-	n, err := migrate.ExecMax(r.db, "sqlite3", r.source, migrate.Down, 1)
+	n, err := migrate.ExecMax(r.db, "postgres", r.source, migrate.Down, 1)
 	duration := time.Since(start)
 
 	if err != nil {
@@ -142,7 +142,7 @@ func (r *MigrationRunner) Status() error {
 		return fmt.Errorf("find migrations: %w", err)
 	}
 
-	records, err := migrate.GetMigrationRecords(r.db, "sqlite3")
+	records, err := migrate.GetMigrationRecords(r.db, "postgres")
 	if err != nil {
 		return fmt.Errorf("get migration records: %w", err)
 	}

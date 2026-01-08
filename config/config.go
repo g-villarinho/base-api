@@ -32,10 +32,10 @@ func bindEnvVars(v *viper.Viper) {
 	v.BindEnv("server.port", "SERVER_PORT")
 	v.BindEnv("server.host", "SERVER_HOST")
 
-	v.BindEnv("sqlite.databasename", "SQLITE_DATABASE_NAME")
-	v.BindEnv("sqlite.maxconn", "SQLITE_MAX_CONN")
-	v.BindEnv("sqlite.maxidle", "SQLITE_MAX_IDLE")
-	v.BindEnv("sqlite.maxlifetime", "SQLITE_MAX_LIFETIME")
+	v.BindEnv("database.dsn", "DATABASE_DSN")
+	v.BindEnv("database.maxconn", "DATABASE_MAX_CONN")
+	v.BindEnv("database.maxidle", "DATABASE_MAX_IDLE")
+	v.BindEnv("database.maxlifetime", "DATABASE_MAX_LIFETIME")
 
 	v.BindEnv("ratelimit.maxrequests", "RATE_LIMIT_MAX_REQUESTS")
 	v.BindEnv("ratelimit.window", "RATE_LIMIT_WINDOW")
@@ -67,10 +67,10 @@ func setDefaults(v *viper.Viper) {
 	v.SetDefault("server.port", 5001)
 	v.SetDefault("server.host", "localhost")
 
-	v.SetDefault("sqlite.databasename", "users.db")
-	v.SetDefault("sqlite.maxconn", 10)
-	v.SetDefault("sqlite.maxidle", 5)
-	v.SetDefault("sqlite.maxlifetime", "300s")
+	v.SetDefault("database.dsn", "postgres://postgres:postgres@localhost:5432/baseproject?sslmode=disable")
+	v.SetDefault("database.maxconn", 10)
+	v.SetDefault("database.maxidle", 5)
+	v.SetDefault("database.maxlifetime", "300s")
 
 	v.SetDefault("ratelimit.maxrequests", 100)
 	v.SetDefault("ratelimit.window", "1m")

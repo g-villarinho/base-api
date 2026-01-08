@@ -14,7 +14,7 @@ import (
 
 const createVerification = `-- name: CreateVerification :exec
 INSERT INTO verifications (id, flow, token, created_at, expires_at, payload, user_id)
-VALUES (?, ?, ?, ?, ?, ?, ?)
+VALUES ($1, $2, $3, $4, $5, $6, $7)
 `
 
 type CreateVerificationParams struct {
@@ -28,7 +28,7 @@ type CreateVerificationParams struct {
 }
 
 func (q *Queries) CreateVerification(ctx context.Context, arg CreateVerificationParams) error {
-	_, err := q.db.ExecContext(ctx, createVerification,
+	_, err := q.db.Exec(ctx, createVerification,
 		arg.ID,
 		arg.Flow,
 		arg.Token,
@@ -41,19 +41,19 @@ func (q *Queries) CreateVerification(ctx context.Context, arg CreateVerification
 }
 
 const deleteVerification = `-- name: DeleteVerification :exec
-DELETE FROM verifications WHERE id = ?
+DELETE FROM verifications WHERE id = $1
 `
 
 func (q *Queries) DeleteVerification(ctx context.Context, id uuid.UUID) error {
-	_, err := q.db.ExecContext(ctx, deleteVerification, id)
+	_, err := q.db.Exec(ctx, deleteVerification, id)
 	return err
 }
 
 const deleteVerificationsByUserIDAndFlow = `-- name: DeleteVerificationsByUserIDAndFlow :exec
 DELETE FROM verifications
-WHERE user_id = ?
-  AND flow = ?
-  AND expires_at > ?
+WHERE user_id = $1
+  AND flow = $2
+  AND expires_at > $3
 `
 
 type DeleteVerificationsByUserIDAndFlowParams struct {
@@ -63,15 +63,15 @@ type DeleteVerificationsByUserIDAndFlowParams struct {
 }
 
 func (q *Queries) DeleteVerificationsByUserIDAndFlow(ctx context.Context, arg DeleteVerificationsByUserIDAndFlowParams) error {
-	_, err := q.db.ExecContext(ctx, deleteVerificationsByUserIDAndFlow, arg.UserID, arg.Flow, arg.ExpiresAt)
+	_, err := q.db.Exec(ctx, deleteVerificationsByUserIDAndFlow, arg.UserID, arg.Flow, arg.ExpiresAt)
 	return err
 }
 
 const findValidVerificationByUserIDAndFlow = `-- name: FindValidVerificationByUserIDAndFlow :one
 SELECT id, flow, token, created_at, expires_at, payload, user_id FROM verifications
-WHERE user_id = ?
-  AND flow = ?
-  AND expires_at > ?
+WHERE user_id = $1
+  AND flow = $2
+  AND expires_at > $3
 ORDER BY created_at DESC
 LIMIT 1
 `
@@ -83,7 +83,7 @@ type FindValidVerificationByUserIDAndFlowParams struct {
 }
 
 func (q *Queries) FindValidVerificationByUserIDAndFlow(ctx context.Context, arg FindValidVerificationByUserIDAndFlowParams) (Verification, error) {
-	row := q.db.QueryRowContext(ctx, findValidVerificationByUserIDAndFlow, arg.UserID, arg.Flow, arg.ExpiresAt)
+	row := q.db.QueryRow(ctx, findValidVerificationByUserIDAndFlow, arg.UserID, arg.Flow, arg.ExpiresAt)
 	var i Verification
 	err := row.Scan(
 		&i.ID,
@@ -98,11 +98,11 @@ func (q *Queries) FindValidVerificationByUserIDAndFlow(ctx context.Context, arg 
 }
 
 const findVerificationByID = `-- name: FindVerificationByID :one
-SELECT id, flow, token, created_at, expires_at, payload, user_id FROM verifications WHERE id = ?
+SELECT id, flow, token, created_at, expires_at, payload, user_id FROM verifications WHERE id = $1
 `
 
 func (q *Queries) FindVerificationByID(ctx context.Context, id uuid.UUID) (Verification, error) {
-	row := q.db.QueryRowContext(ctx, findVerificationByID, id)
+	row := q.db.QueryRow(ctx, findVerificationByID, id)
 	var i Verification
 	err := row.Scan(
 		&i.ID,
@@ -117,11 +117,11 @@ func (q *Queries) FindVerificationByID(ctx context.Context, id uuid.UUID) (Verif
 }
 
 const findVerificationByToken = `-- name: FindVerificationByToken :one
-SELECT id, flow, token, created_at, expires_at, payload, user_id FROM verifications WHERE token = ?
+SELECT id, flow, token, created_at, expires_at, payload, user_id FROM verifications WHERE token = $1
 `
 
 func (q *Queries) FindVerificationByToken(ctx context.Context, token string) (Verification, error) {
-	row := q.db.QueryRowContext(ctx, findVerificationByToken, token)
+	row := q.db.QueryRow(ctx, findVerificationByToken, token)
 	var i Verification
 	err := row.Scan(
 		&i.ID,

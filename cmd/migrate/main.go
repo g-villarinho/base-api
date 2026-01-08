@@ -8,7 +8,7 @@ import (
 
 	"github.com/gbvillarinho/base-project/config"
 	"github.com/gbvillarinho/base-project/internal/infra/database"
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 const migrationsDir = "internal/infra/database/migrations"
@@ -23,7 +23,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	db, err := sql.Open("sqlite3", cfg.SqlLite.DatabaseName)
+	db, err := sql.Open("pgx", cfg.Database.DSN)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error opening database: %v\n", err)
 		os.Exit(1)

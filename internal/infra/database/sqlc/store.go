@@ -2,8 +2,9 @@ package sqlc
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
+
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type Store interface {
@@ -13,20 +14,20 @@ type Store interface {
 
 type StoreImpl struct {
 	*Queries
-	db *sql.DB
+	pool *pgxpool.Pool
 }
 
-func NewStore(db *sql.DB) Store {
+func NewStore(pool *pgxpool.Pool) Store {
 	return &StoreImpl{
-		db:      db,
-		Queries: New(db),
+		pool:    pool,
+		Queries: New(pool),
 	}
 }
 
 func (store *StoreImpl) ExecTx(ctx context.Context, fn func(Querier) error) error {
-	tx, err := store.db.BeginTx(ctx, nil)
+	tx, err := store.pool.Begin(ctx)
 	if err != nil {
-		return err
+		return fmt.Errorf("begin transaction: %w", err)
 	}
 
 	q := store.WithTx(tx)
@@ -34,12 +35,11 @@ func (store *StoreImpl) ExecTx(ctx context.Context, fn func(Querier) error) erro
 	err = fn(q)
 
 	if err != nil {
-
-		if rbErr := tx.Rollback(); rbErr != nil {
+		if rbErr := tx.Rollback(ctx); rbErr != nil {
 			return fmt.Errorf("tx err: %v, rb err: %v", err, rbErr)
 		}
 		return err
 	}
 
-	return tx.Commit()
+	return tx.Commit(ctx)
 }

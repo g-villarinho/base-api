@@ -20,7 +20,7 @@ type Config struct {
 	RateLimit RateLimit `mapstructure:"ratelimit"`
 	Cors      Cors      `mapstructure:"cors"`
 	URL       URL       `mapstructure:"url"`
-	SqlLite   SqlLite   `mapstructure:"sqlite"`
+	Database  Database  `mapstructure:"database"`
 	Resend    Resend    `mapstructure:"resend"`
 	Session   Session   `mapstructure:"session"`
 	Auth      Auth      `mapstructure:"auth"`
@@ -35,11 +35,11 @@ type Server struct {
 	Host string `mapstructure:"host"`
 }
 
-type SqlLite struct {
-	DatabaseName string        `mapstructure:"databasename"`
-	MaxConn      int           `mapstructure:"maxconn"`
-	MaxIdle      int           `mapstructure:"maxidle"`
-	MaxLifeTime  time.Duration `mapstructure:"maxlifetime"`
+type Database struct {
+	DSN         string        `mapstructure:"dsn"`
+	MaxConn     int32         `mapstructure:"maxconn"`
+	MaxIdle     int32         `mapstructure:"maxidle"`
+	MaxLifeTime time.Duration `mapstructure:"maxlifetime"`
 }
 
 type RateLimit struct {

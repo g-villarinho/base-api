@@ -15,9 +15,9 @@ import (
 const blockUser = `-- name: BlockUser :exec
 UPDATE users
 SET status = 'BLOCKED',
-    updated_at = ?,
-    blocked_at = ?
-WHERE id = ?
+    updated_at = $1,
+    blocked_at = $2
+WHERE id = $3
 `
 
 type BlockUserParams struct {
@@ -27,13 +27,13 @@ type BlockUserParams struct {
 }
 
 func (q *Queries) BlockUser(ctx context.Context, arg BlockUserParams) error {
-	_, err := q.db.ExecContext(ctx, blockUser, arg.UpdatedAt, arg.BlockedAt, arg.ID)
+	_, err := q.db.Exec(ctx, blockUser, arg.UpdatedAt, arg.BlockedAt, arg.ID)
 	return err
 }
 
 const createUser = `-- name: CreateUser :exec
 INSERT INTO users (id, name, email, status, password_hash, created_at, updated_at, email_confirmed_at, blocked_at)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
 `
 
 type CreateUserParams struct {
@@ -49,7 +49,7 @@ type CreateUserParams struct {
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) error {
-	_, err := q.db.ExecContext(ctx, createUser,
+	_, err := q.db.Exec(ctx, createUser,
 		arg.ID,
 		arg.Name,
 		arg.Email,
@@ -64,22 +64,22 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) error {
 }
 
 const existsByEmail = `-- name: ExistsByEmail :one
-SELECT COUNT(*) > 0 FROM users WHERE email = ?
+SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)
 `
 
 func (q *Queries) ExistsByEmail(ctx context.Context, email string) (bool, error) {
-	row := q.db.QueryRowContext(ctx, existsByEmail, email)
-	var column_1 bool
-	err := row.Scan(&column_1)
-	return column_1, err
+	row := q.db.QueryRow(ctx, existsByEmail, email)
+	var exists bool
+	err := row.Scan(&exists)
+	return exists, err
 }
 
 const findUserByEmail = `-- name: FindUserByEmail :one
-SELECT id, name, email, status, password_hash, created_at, updated_at, email_confirmed_at, blocked_at FROM users WHERE email = ?
+SELECT id, name, email, status, password_hash, created_at, updated_at, email_confirmed_at, blocked_at FROM users WHERE email = $1
 `
 
 func (q *Queries) FindUserByEmail(ctx context.Context, email string) (User, error) {
-	row := q.db.QueryRowContext(ctx, findUserByEmail, email)
+	row := q.db.QueryRow(ctx, findUserByEmail, email)
 	var i User
 	err := row.Scan(
 		&i.ID,
@@ -96,11 +96,11 @@ func (q *Queries) FindUserByEmail(ctx context.Context, email string) (User, erro
 }
 
 const findUserByID = `-- name: FindUserByID :one
-SELECT id, name, email, status, password_hash, created_at, updated_at, email_confirmed_at, blocked_at FROM users WHERE id = ?
+SELECT id, name, email, status, password_hash, created_at, updated_at, email_confirmed_at, blocked_at FROM users WHERE id = $1
 `
 
 func (q *Queries) FindUserByID(ctx context.Context, id uuid.UUID) (User, error) {
-	row := q.db.QueryRowContext(ctx, findUserByID, id)
+	row := q.db.QueryRow(ctx, findUserByID, id)
 	var i User
 	err := row.Scan(
 		&i.ID,
@@ -118,8 +118,8 @@ func (q *Queries) FindUserByID(ctx context.Context, id uuid.UUID) (User, error) 
 
 const updateUserEmail = `-- name: UpdateUserEmail :exec
 UPDATE users
-SET email = ?, updated_at = ?
-WHERE id = ?
+SET email = $1, updated_at = $2
+WHERE id = $3
 `
 
 type UpdateUserEmailParams struct {
@@ -129,14 +129,14 @@ type UpdateUserEmailParams struct {
 }
 
 func (q *Queries) UpdateUserEmail(ctx context.Context, arg UpdateUserEmailParams) error {
-	_, err := q.db.ExecContext(ctx, updateUserEmail, arg.Email, arg.UpdatedAt, arg.ID)
+	_, err := q.db.Exec(ctx, updateUserEmail, arg.Email, arg.UpdatedAt, arg.ID)
 	return err
 }
 
 const updateUserName = `-- name: UpdateUserName :exec
 UPDATE users
-SET name = ?, updated_at = ?
-WHERE id = ?
+SET name = $1, updated_at = $2
+WHERE id = $3
 `
 
 type UpdateUserNameParams struct {
@@ -146,14 +146,14 @@ type UpdateUserNameParams struct {
 }
 
 func (q *Queries) UpdateUserName(ctx context.Context, arg UpdateUserNameParams) error {
-	_, err := q.db.ExecContext(ctx, updateUserName, arg.Name, arg.UpdatedAt, arg.ID)
+	_, err := q.db.Exec(ctx, updateUserName, arg.Name, arg.UpdatedAt, arg.ID)
 	return err
 }
 
 const updateUserPassword = `-- name: UpdateUserPassword :exec
 UPDATE users
-SET password_hash = ?, updated_at = ?
-WHERE id = ?
+SET password_hash = $1, updated_at = $2
+WHERE id = $3
 `
 
 type UpdateUserPasswordParams struct {
@@ -163,16 +163,16 @@ type UpdateUserPasswordParams struct {
 }
 
 func (q *Queries) UpdateUserPassword(ctx context.Context, arg UpdateUserPasswordParams) error {
-	_, err := q.db.ExecContext(ctx, updateUserPassword, arg.PasswordHash, arg.UpdatedAt, arg.ID)
+	_, err := q.db.Exec(ctx, updateUserPassword, arg.PasswordHash, arg.UpdatedAt, arg.ID)
 	return err
 }
 
 const verifyUserEmail = `-- name: VerifyUserEmail :exec
 UPDATE users
 SET status = 'ACTIVE',
-    updated_at = ?,
-    email_confirmed_at = ?
-WHERE id = ?
+    updated_at = $1,
+    email_confirmed_at = $2
+WHERE id = $3
 `
 
 type VerifyUserEmailParams struct {
@@ -182,6 +182,6 @@ type VerifyUserEmailParams struct {
 }
 
 func (q *Queries) VerifyUserEmail(ctx context.Context, arg VerifyUserEmailParams) error {
-	_, err := q.db.ExecContext(ctx, verifyUserEmail, arg.UpdatedAt, arg.EmailConfirmedAt, arg.ID)
+	_, err := q.db.Exec(ctx, verifyUserEmail, arg.UpdatedAt, arg.EmailConfirmedAt, arg.ID)
 	return err
 }

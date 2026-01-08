@@ -2,7 +2,7 @@ version: "2"
 sql:
   - schema: "internal/infra/database/migrations"
     queries: "internal/infra/database/queries"
-    engine: "sqlite"
+    engine: "postgresql"
     gen:
       go:
         package: "sqlc"
@@ -13,12 +13,25 @@ sql:
         emit_exact_table_names: false
         emit_empty_slices: true
         emit_pointers_for_null_types: true
+        sql_package: "pgx/v5"
         overrides:
           - db_type: "uuid"
             go_type: "github.com/google/uuid.UUID"
           - db_type: "timestamptz"
+            go_type:
+              import: "time"
+              type: "Time"
+              pointer: true
+            nullable: true
+          - db_type: "timestamp"
+            go_type:
+              import: "time"
+              type: "Time"
+              pointer: true
+            nullable: true
+          - db_type: "timestamptz"
             go_type: "time.Time"
+            nullable: false
           - db_type: "timestamp"
             go_type: "time.Time"
-          - db_type: "datetime"
-            go_type: "time.Time"
+            nullable: false

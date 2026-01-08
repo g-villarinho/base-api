@@ -14,7 +14,7 @@ import (
 
 const createSession = `-- name: CreateSession :exec
 INSERT INTO sessions (id, token, device_name, ip_address, user_agent, expires_at, created_at, user_id)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
 `
 
 type CreateSessionParams struct {
@@ -29,7 +29,7 @@ type CreateSessionParams struct {
 }
 
 func (q *Queries) CreateSession(ctx context.Context, arg CreateSessionParams) error {
-	_, err := q.db.ExecContext(ctx, createSession,
+	_, err := q.db.Exec(ctx, createSession,
 		arg.ID,
 		arg.Token,
 		arg.DeviceName,
@@ -43,17 +43,17 @@ func (q *Queries) CreateSession(ctx context.Context, arg CreateSessionParams) er
 }
 
 const deleteSessionByID = `-- name: DeleteSessionByID :exec
-DELETE FROM sessions WHERE id = ?
+DELETE FROM sessions WHERE id = $1
 `
 
 func (q *Queries) DeleteSessionByID(ctx context.Context, id uuid.UUID) error {
-	_, err := q.db.ExecContext(ctx, deleteSessionByID, id)
+	_, err := q.db.Exec(ctx, deleteSessionByID, id)
 	return err
 }
 
 const deleteSessionsByUserExceptID = `-- name: DeleteSessionsByUserExceptID :exec
 DELETE FROM sessions
-WHERE user_id = ? AND id != ?
+WHERE user_id = $1 AND id != $2
 `
 
 type DeleteSessionsByUserExceptIDParams struct {
@@ -62,25 +62,25 @@ type DeleteSessionsByUserExceptIDParams struct {
 }
 
 func (q *Queries) DeleteSessionsByUserExceptID(ctx context.Context, arg DeleteSessionsByUserExceptIDParams) error {
-	_, err := q.db.ExecContext(ctx, deleteSessionsByUserExceptID, arg.UserID, arg.ID)
+	_, err := q.db.Exec(ctx, deleteSessionsByUserExceptID, arg.UserID, arg.ID)
 	return err
 }
 
 const deleteSessionsByUserID = `-- name: DeleteSessionsByUserID :exec
-DELETE FROM sessions WHERE user_id = ?
+DELETE FROM sessions WHERE user_id = $1
 `
 
 func (q *Queries) DeleteSessionsByUserID(ctx context.Context, userID uuid.UUID) error {
-	_, err := q.db.ExecContext(ctx, deleteSessionsByUserID, userID)
+	_, err := q.db.Exec(ctx, deleteSessionsByUserID, userID)
 	return err
 }
 
 const findSessionByID = `-- name: FindSessionByID :one
-SELECT id, token, device_name, ip_address, user_agent, expires_at, created_at, user_id FROM sessions WHERE id = ?
+SELECT id, token, device_name, ip_address, user_agent, expires_at, created_at, user_id FROM sessions WHERE id = $1
 `
 
 func (q *Queries) FindSessionByID(ctx context.Context, id uuid.UUID) (Session, error) {
-	row := q.db.QueryRowContext(ctx, findSessionByID, id)
+	row := q.db.QueryRow(ctx, findSessionByID, id)
 	var i Session
 	err := row.Scan(
 		&i.ID,
@@ -96,11 +96,11 @@ func (q *Queries) FindSessionByID(ctx context.Context, id uuid.UUID) (Session, e
 }
 
 const findSessionByToken = `-- name: FindSessionByToken :one
-SELECT id, token, device_name, ip_address, user_agent, expires_at, created_at, user_id FROM sessions WHERE token = ?
+SELECT id, token, device_name, ip_address, user_agent, expires_at, created_at, user_id FROM sessions WHERE token = $1
 `
 
 func (q *Queries) FindSessionByToken(ctx context.Context, token string) (Session, error) {
-	row := q.db.QueryRowContext(ctx, findSessionByToken, token)
+	row := q.db.QueryRow(ctx, findSessionByToken, token)
 	var i Session
 	err := row.Scan(
 		&i.ID,
@@ -117,7 +117,7 @@ func (q *Queries) FindSessionByToken(ctx context.Context, token string) (Session
 
 const findSessionsByUserID = `-- name: FindSessionsByUserID :many
 SELECT id, token, device_name, ip_address, user_agent, expires_at, created_at, user_id FROM sessions
-WHERE user_id = ? AND expires_at > ?
+WHERE user_id = $1 AND expires_at > $2
 `
 
 type FindSessionsByUserIDParams struct {
@@ -126,7 +126,7 @@ type FindSessionsByUserIDParams struct {
 }
 
 func (q *Queries) FindSessionsByUserID(ctx context.Context, arg FindSessionsByUserIDParams) ([]Session, error) {
-	rows, err := q.db.QueryContext(ctx, findSessionsByUserID, arg.UserID, arg.ExpiresAt)
+	rows, err := q.db.Query(ctx, findSessionsByUserID, arg.UserID, arg.ExpiresAt)
 	if err != nil {
 		return nil, err
 	}
@@ -147,9 +147,6 @@ func (q *Queries) FindSessionsByUserID(ctx context.Context, arg FindSessionsByUs
 			return nil, err
 		}
 		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
