@@ -33,6 +33,19 @@ func NewSecurityHandler(
 	}
 }
 
+// UpdatePassword godoc
+// @Summary Update user password
+// @Description Updates the authenticated user's password. Requires the current password for verification.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param body body model.UpdatePasswordPayload true "Password update data"
+// @Success 204 "Password updated successfully"
+// @Failure 400 {object} model.ProblemJSON "Validation error"
+// @Failure 401 {object} model.ProblemJSON "Unauthorized"
+// @Failure 500 {object} model.ProblemJSON "Internal server error"
+// @Security CookieAuth
+// @Router /auth/password [patch]
 func (h *SecurityHandler) UpdatePassword(c echo.Context) error {
 	userID := echoctx.GetUserID(c)
 	log := h.logger.With(
@@ -59,6 +72,17 @@ func (h *SecurityHandler) UpdatePassword(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
+// ForgotPassword godoc
+// @Summary Request password reset
+// @Description Sends a password reset email to the specified address if an account exists.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param body body model.ForgotPasswordPayload true "Email address"
+// @Success 200 "Password reset email sent (if account exists)"
+// @Failure 400 {object} model.ProblemJSON "Validation error"
+// @Failure 500 {object} model.ProblemJSON "Internal server error"
+// @Router /auth/forgot-password [post]
 func (h *SecurityHandler) ForgotPassword(c echo.Context) error {
 	log := h.logger.With(slog.String("func", "ForgotPassword"))
 
@@ -80,6 +104,17 @@ func (h *SecurityHandler) ForgotPassword(c echo.Context) error {
 	return c.NoContent(http.StatusOK)
 }
 
+// ResetPassword godoc
+// @Summary Reset password with token
+// @Description Resets the user's password using the token from the password reset email. Creates a new session.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param body body model.ResetPasswordPayload true "Reset token and new password"
+// @Success 204 "Password reset successfully"
+// @Failure 400 {object} model.ProblemJSON "Invalid or expired token"
+// @Failure 500 {object} model.ProblemJSON "Internal server error"
+// @Router /auth/reset-password [post]
 func (h *SecurityHandler) ResetPassword(c echo.Context) error {
 	log := h.logger.With(slog.String("func", "ResetPassword"))
 
@@ -117,6 +152,19 @@ func (h *SecurityHandler) ResetPassword(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
+// StartChangeEmail godoc
+// @Summary Request email change
+// @Description Initiates the email change process. A verification email will be sent to the new address.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param body body model.RequestEmailChangePayload true "New email address"
+// @Success 200 "Verification email sent"
+// @Failure 400 {object} model.ProblemJSON "Validation error or email already in use"
+// @Failure 401 {object} model.ProblemJSON "Unauthorized"
+// @Failure 500 {object} model.ProblemJSON "Internal server error"
+// @Security CookieAuth
+// @Router /auth/change-email/start [post]
 func (h *SecurityHandler) StartChangeEmail(c echo.Context) error {
 	userID := echoctx.GetUserID(c)
 	log := h.logger.With(
@@ -153,6 +201,17 @@ func (h *SecurityHandler) StartChangeEmail(c echo.Context) error {
 	return c.NoContent(http.StatusOK)
 }
 
+// ChangeEmail godoc
+// @Summary Confirm email change
+// @Description Confirms the email change using the verification token sent to the new email address.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param body body model.ConfirmEmailChangePayload true "Verification token"
+// @Success 204 "Email changed successfully"
+// @Failure 400 {object} model.ProblemJSON "Invalid or expired token"
+// @Failure 500 {object} model.ProblemJSON "Internal server error"
+// @Router /auth/change-email/confirm [post]
 func (h *SecurityHandler) ChangeEmail(c echo.Context) error {
 	log := h.logger.With(slog.String("func", "ChangeEmail"))
 

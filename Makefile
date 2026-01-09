@@ -1,5 +1,4 @@
-VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo "dev")
-
+.PHONY: setup run swagger docs build test mocks sqlc migrate migrate-down migrate-status
 setup: ## Instala bibliotecas necessárias do projeto
 	@go install github.com/vektra/mockery/v2@v2.53.4
 	@go install github.com/air-verse/air@v1.63.4
@@ -17,8 +16,7 @@ swagger: ## Generate Swagger/OpenAPI documentation
 docs: swagger ## Alias for swagger generation
 
 build:  ## Build includes version injection
-	@echo "Building with version: $(VERSION)"
-	@go build -ldflags "-X main.Version=$(VERSION)" -o bin/api cmd/api/main.go
+	@go build -o bin/api cmd/api/main.go
 
 test: ## Executa todos os testes
 	@gotestsum --format pkgname --format-hide-empty-pkg -- ./...
@@ -37,3 +35,12 @@ migrate-down: ## Reverte a última migration aplicada
 
 migrate-status: ## Mostra status das migrations
 	@go run cmd/migrate/main.go --direction=status
+
+docker-up: ## Sobe containers docker necessários para o projeto
+	@docker compose up -d
+
+docker-down: ## Derruba containers docker do projeto
+	@docker compose down
+
+help: ## Mostra essa ajuda
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'

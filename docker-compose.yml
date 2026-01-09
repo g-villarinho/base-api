@@ -1,0 +1,33 @@
+# Docker Compose - Base Project Template
+#
+# IMPORTANT: This is a template configuration. Customize it according to your needs:
+# - Change service names, ports, and credentials for your environment
+# - Add additional services (Redis, etc.) as needed
+# - Configure volumes and networks for production deployments
+#
+# Usage:
+#   docker compose up -d        # Start services
+#   docker compose down         # Stop services
+#   docker compose logs -f      # View logs
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: baseproject-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: baseproject
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

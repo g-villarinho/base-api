@@ -33,6 +33,19 @@ func NewIdentityHandler(
 	}
 }
 
+// Register godoc
+// @Summary Register a new user account
+// @Description Creates a new user account with email and password. A verification email will be sent to confirm the email address.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param body body model.RegisterAccountPayload true "Registration data"
+// @Success 201 "Account created successfully"
+// @Failure 400 {object} model.ProblemJSON "Validation error"
+// @Failure 409 {object} model.ProblemJSON "Email already exists"
+// @Failure 500 {object} model.ProblemJSON "Internal server error"
+// @Failure 501 {object} model.ProblemJSON "Password authentication not enabled"
+// @Router /auth/register [post]
 func (i *IdentityHandler) Register(c echo.Context) error {
 	log := i.logger.With("method", "Register")
 
@@ -64,6 +77,19 @@ func (i *IdentityHandler) Register(c echo.Context) error {
 	return c.NoContent(http.StatusCreated)
 }
 
+// RegisterMagicLink godoc
+// @Summary Register a new user account with magic link
+// @Description Creates a new user account without password. A magic link will be sent to the email for verification and login.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param body body model.RegisterMagicLinkPayload true "Registration data"
+// @Success 201 "Account created successfully, magic link sent"
+// @Failure 400 {object} model.ProblemJSON "Validation error"
+// @Failure 409 {object} model.ProblemJSON "Email already exists"
+// @Failure 500 {object} model.ProblemJSON "Internal server error"
+// @Failure 501 {object} model.ProblemJSON "Magic link authentication not enabled"
+// @Router /auth/register/magic-link [post]
 func (i *IdentityHandler) RegisterMagicLink(c echo.Context) error {
 	log := i.logger.With("method", "RegisterMagicLink")
 
@@ -95,6 +121,17 @@ func (i *IdentityHandler) RegisterMagicLink(c echo.Context) error {
 	return c.NoContent(http.StatusCreated)
 }
 
+// ConfirmEmail godoc
+// @Summary Confirm email address
+// @Description Verifies the user's email address using the token sent via email. Creates a session upon successful verification.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param token query string true "Email verification token"
+// @Success 204 "Email confirmed successfully"
+// @Failure 400 {object} model.ProblemJSON "Invalid or expired token"
+// @Failure 500 {object} model.ProblemJSON "Internal server error"
+// @Router /auth/verify-email [get]
 func (i *IdentityHandler) ConfirmEmail(c echo.Context) error {
 	log := i.logger.With("method", "ConfirmEmail")
 

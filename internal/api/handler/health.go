@@ -2,23 +2,23 @@ package handler
 
 import (
 	"context"
-	"database/sql"
 	"log/slog"
 	"net/http"
 	"time"
 
 	"github.com/gbvillarinho/base-project/internal/api/model"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/labstack/echo/v4"
 )
 
 type HealthHandler struct {
-	db     *sql.DB
+	pool   *pgxpool.Pool
 	logger *slog.Logger
 }
 
-func NewHealthHandler(db *sql.DB, logger *slog.Logger) *HealthHandler {
+func NewHealthHandler(pool *pgxpool.Pool, logger *slog.Logger) *HealthHandler {
 	return &HealthHandler{
-		db:     db,
+		pool:   pool,
 		logger: logger.With(slog.String("handler", "health")),
 	}
 }
@@ -27,7 +27,7 @@ func NewHealthHandler(db *sql.DB, logger *slog.Logger) *HealthHandler {
 // @Summary health check endpoint
 // @Description  Returns the health status of the API including database connectivity and version information
 // @Tags         Health
-// @Produce      JSON
+// @Produce      json
 // @Success      200  {object}  model.HealthResponse  "Service is healthy"
 // @Failure      503  {object}  model.HealthResponse  "Service is unhealthy"
 // @Router       /health [get]
@@ -55,5 +55,5 @@ func (h *HealthHandler) checkDatabase(ctx context.Context) error {
 	pingCtx, cancel := context.WithTimeout(ctx, 2*time.Second)
 	defer cancel()
 
-	return h.db.PingContext(pingCtx)
+	return h.pool.Ping(pingCtx)
 }

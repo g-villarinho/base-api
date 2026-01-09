@@ -125,6 +125,18 @@ func (h *SessionHandler) RevokeAllSessions(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
+// Logout godoc
+// @Summary User logout
+// @Description Logs out the current user by revoking their session and clearing the session cookie.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Security CookieAuth
+// @Success 204 "Logout successful"
+// @Failure 401 {object} model.ProblemJSON "Unauthorized"
+// @Failure 404 {object} model.ProblemJSON "Session not found"
+// @Failure 500 {object} model.ProblemJSON "Internal server error"
+// @Router /auth/logout [delete]
 func (h *SessionHandler) Logout(c echo.Context) error {
 	logger := h.logger.With(
 		slog.String("method", "Logout"),

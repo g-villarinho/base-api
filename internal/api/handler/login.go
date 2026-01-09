@@ -33,6 +33,20 @@ func NewLoginHandler(
 	}
 }
 
+// Login godoc
+// @Summary User login
+// @Description Authenticates a user with email and password. Creates a session and sets an HTTP-only cookie.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param body body model.LoginPayload true "Login credentials"
+// @Success 200 "Login successful"
+// @Failure 400 {object} model.ProblemJSON "Validation error"
+// @Failure 401 {object} model.ProblemJSON "Invalid credentials"
+// @Failure 403 {object} model.ProblemJSON "User blocked or email not verified"
+// @Failure 500 {object} model.ProblemJSON "Internal server error"
+// @Failure 501 {object} model.ProblemJSON "Password authentication not enabled"
+// @Router /auth/login [post]
 func (h *LoginHandler) Login(c echo.Context) error {
 	log := h.logger.With("handler", "Login")
 
@@ -85,6 +99,18 @@ func (h *LoginHandler) Login(c echo.Context) error {
 	return c.NoContent(http.StatusOK)
 }
 
+// RequestMagicLink godoc
+// @Summary Request a magic link for login
+// @Description Sends a magic link to the user's email for passwordless authentication.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param body body model.RequestMagicLinkPayload true "Email address"
+// @Success 200 "Magic link sent successfully"
+// @Failure 400 {object} model.ProblemJSON "Validation error"
+// @Failure 500 {object} model.ProblemJSON "Internal server error"
+// @Failure 501 {object} model.ProblemJSON "Magic link authentication not enabled"
+// @Router /auth/magic-link/start [post]
 func (h *LoginHandler) RequestMagicLink(c echo.Context) error {
 	log := h.logger.With("handler", "RequestMagicLink")
 
@@ -111,6 +137,19 @@ func (h *LoginHandler) RequestMagicLink(c echo.Context) error {
 	return c.NoContent(http.StatusOK)
 }
 
+// VerifyMagicLink godoc
+// @Summary Verify magic link and login
+// @Description Verifies the magic link token and creates a session for the user.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param token query string true "Magic link token"
+// @Success 200 "Login successful"
+// @Failure 400 {object} model.ProblemJSON "Invalid or expired token"
+// @Failure 403 {object} model.ProblemJSON "User blocked"
+// @Failure 500 {object} model.ProblemJSON "Internal server error"
+// @Failure 501 {object} model.ProblemJSON "Magic link authentication not enabled"
+// @Router /auth/magic-link/verify [get]
 func (h *LoginHandler) VerifyMagicLink(c echo.Context) error {
 	log := h.logger.With("handler", "VerifyMagicLink")
 

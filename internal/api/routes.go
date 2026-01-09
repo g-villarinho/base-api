@@ -71,7 +71,7 @@ func registerSessionRoutes(e *echo.Echo, h *handler.SessionHandler, m *middlewar
 }
 
 func registerSwaggerRoutes(e *echo.Echo, h *handler.SwaggerHandler) {
-	e.GET("/docs", h.ServeScalarUI)
+	e.GET("/docs", h.ServeSwaggerUI)
 
 	swagger := e.Group("/swagger")
 	swagger.GET("/doc.json", h.ServeSwaggerJSON)
