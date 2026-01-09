@@ -12,7 +12,6 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/labstack/echo/v4 v4.14.0
 	github.com/labstack/gommon v0.4.2
-	github.com/mattn/go-sqlite3 v1.14.32
 	github.com/resend/resend-go/v2 v2.28.0
 	github.com/rubenv/sql-migrate v1.8.1
 	github.com/spf13/viper v1.21.0
@@ -44,6 +43,7 @@ require (
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/mattn/go-sqlite3 v1.14.32 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
