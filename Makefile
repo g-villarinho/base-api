@@ -1,4 +1,4 @@
-.PHONY: setup run swagger docs build test mocks sqlc migrate migrate-down migrate-status
+.PHONY: setup run swagger docs build test mocks sqlc migrate migrate-down migrate-status watch
 setup: ## Instala bibliotecas necessárias do projeto
 	@go install github.com/vektra/mockery/v2@v2.53.4
 	@go install github.com/air-verse/air@v1.63.4
@@ -8,6 +8,9 @@ setup: ## Instala bibliotecas necessárias do projeto
 
 run: build ## Roda o servidor com .env padrão
 	@./bin/api
+
+watch: ## Roda o servidor com hot reload (Air)
+	@air
 
 swagger: ## Generate Swagger/OpenAPI documentation
 	@swag init -g cmd/api/main.go -o docs --parseDependency --parseInternal
