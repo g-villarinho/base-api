@@ -63,7 +63,10 @@ A production-ready Go REST API following **Clean Architecture** with Domain-Driv
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/g-villarinho/base-api.git
+cd base-project
+```
+```bash
 cd base-project
 ```
 
@@ -95,7 +98,10 @@ The API will be available at `http://localhost:5001`.
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/g-villarinho/base-api.git
+```
+
+```bash
 cd base-project
 ```
 
