@@ -64,7 +64,6 @@ A production-ready Go REST API following **Clean Architecture** with Domain-Driv
 1. Clone the repository:
 ```bash
 git clone https://github.com/g-villarinho/base-api.git
-cd base-project
 ```
 ```bash
 cd base-project
